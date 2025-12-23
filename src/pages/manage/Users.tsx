@@ -253,7 +253,14 @@ export default function Users() {
           toast.error(t('users.passwordRequired'))
           return
         }
-        await api.post('/api/users', formData)
+        const createData = {
+          username: formData.username,
+          password: formData.password,
+          email: formData.email || null,
+          phone: formData.phone || null,
+          group_ids: formData.group_id ? [String(formData.group_id)] : []
+        }
+        await api.post('/api/users', createData)
         toast.success(t('users.createSuccess'))
       }
       setShowEditDialog(false)
